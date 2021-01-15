@@ -1,8 +1,31 @@
-<div *ngIf="posts.state | async as state">
+<!-- <div *ngIf="posts.state | async as state">
   <p *ngIf="state.loading">Loading....</p>
   <p *ngIf="state.error">Loading....</p>
   <p *ngIf="state.res">
     {{ state.res.title | json }}
+  </p>
+</div> -->
+
+<h1>Async</h1>
+
+<div *ngIf="post$ | async as state">
+  <p *ngIf="state.loading">Loading....</p>
+  <p *ngIf="state.error">Loading....</p>
+  <p *ngIf="state.res">
+    {{ state.res | json }}
+  </p>
+</div>
+
+<div *ngIf="post2$ | async as state">
+  {{ state.body }}
+</div>
+
+<h1>Async Pipe</h1>
+<div *ngIf="post2$ | asyncState | async as state">
+  <p *ngIf="state.loading">Loading....</p>
+  <p *ngIf="state.error">Loading....</p>
+  <p *ngIf="state.res">
+    {{ state.res | json }}
   </p>
 </div>
 

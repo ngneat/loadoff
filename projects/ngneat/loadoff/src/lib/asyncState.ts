@@ -47,7 +47,7 @@ export function createAsyncState<Response, E = any>() {
 
   return {
     state,
-    track<T>() {
+    track() {
       return asyncTracker(state);
     },
   };
