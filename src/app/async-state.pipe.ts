@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { AsyncState, toAsyncState } from 'projects/ngneat/loadoff/src/lib/a';
+import { AsyncState, toAsyncState } from 'projects/ngneat/loadoff/src/lib/toAsyncState';
 import { Observable } from 'rxjs';
 
 @Pipe({

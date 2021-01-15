@@ -1,3 +1,2 @@
-export { createAsyncState } from './lib/asyncState';
 export { loadingFor } from './lib/loadingFor';
-export { toAsyncState } from './lib/a';
+export { toAsyncState, isSuccess, hasError, isComplete, isLoading, AsyncState } from './lib/toAsyncState';
