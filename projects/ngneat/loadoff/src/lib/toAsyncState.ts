@@ -16,7 +16,7 @@ export class AsyncState<T, E = any> {
     const defaults = {
       error: undefined,
       res: undefined,
-      loading: false,
+      loading: true,
       complete: false,
       success: false
     };
@@ -69,17 +69,17 @@ export function toAsyncState<T>(): OperatorFunction<T, AsyncState<T>> {
     map((res) => {
       return new AsyncState<T>({
         res,
+        loading: false,
         complete: true,
         success: true
       });
     }),
-    startWith(new AsyncState<T>({
-      loading: true
-    })),
+    startWith(new AsyncState<T>()),
     catchError((error) => {
       return of(
         new AsyncState<T>({
           error,
+          loading: false,
           complete: true
         })
       );

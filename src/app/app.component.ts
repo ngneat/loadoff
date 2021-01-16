@@ -29,6 +29,7 @@ export class AppComponent {
   ngOnInit() {
     this.post$ = this.http.get<Post>('https://jsonplaceholder.typicode.com/posts/2').pipe(
       map((post) => post.title),
+      delay(1000),
       toAsyncState()
     );
 

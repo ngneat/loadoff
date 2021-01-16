@@ -5,9 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AsyncStatePipe } from './async-state.pipe';
+import { SubscribeDirective } from './subscribe.directive';
 
 @NgModule({
-  declarations: [AppComponent, AsyncStatePipe],
+  declarations: [AppComponent, AsyncStatePipe, SubscribeDirective],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
