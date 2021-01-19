@@ -1,24 +1,43 @@
-<!-- <div *ngIf="posts.state | async as state">
+<h1>Async</h1>
+
+<ng-template [subscribe]="post$" let-state>
   <p *ngIf="state.loading">Loading....</p>
   <p *ngIf="state.error">Loading....</p>
   <p *ngIf="state.res">
-    {{ state.res.title | json }}
-  </p>
-</div> -->
-
-<h1>Async</h1>
-
-<ng-template *ngIf="post$ | async as state">
-  <p *ngIf='state.loading'>Loading....</p>
-  <p *ngIf='state.error'>Loading....</p>
-  <p *ngIf='state.res'>
     {{ state.res | json }}
   </p>
 </ng-template>
 
-<!--<div *ngIf='post2$ | async as state'>-->
-<!--  {{ state.body }}-->
-<!--</div>-->
+<button (click)="refresh()">Refresh</button>
 
+<h1>Delayed</h1>
 
-<button (click)='refresh()'>Refresh</button>
+<ng-template [subscribe]="delayed$" let-state>
+  <p *ngIf="state.loading">Loading....</p>
+  <p *ngIf="state.error">Loading....</p>
+  <p *ngIf="state.res">
+    {{ state.res | json }}
+  </p>
+</ng-template>
+
+<h1>Higher</h1>
+
+<ng-template [subscribe]="higher$" let-state>
+  <p *ngIf="state.loading">Loading....</p>
+  <p *ngIf="state.error">Loading....</p>
+  <p *ngIf="state.res">
+    {{ state.res | json }}
+  </p>
+</ng-template>
+
+<h1>Higher initial</h1>
+
+<ng-template [subscribe]="highersInitial$" let-state>
+  <p *ngIf="state.loading">Loading....</p>
+  <p *ngIf="state.error">Loading....</p>
+  <p *ngIf="state.res">
+    {{ state.res | json }}
+  </p>
+</ng-template>
+
+<input type="text" #input placeholder="Post id" /><button (click)="fetch(input.value)">Fetch</button>

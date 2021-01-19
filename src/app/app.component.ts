@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { isSuccess, loadingFor, toAsyncState } from '@ngneat/loadoff';
-import { delay, map } from 'rxjs/operators';
+import { toAsyncState } from '@ngneat/loadoff';
+import { delay, map, startWith, switchMap } from 'rxjs/operators';
 import { AsyncState } from 'projects/ngneat/loadoff/src/lib/toAsyncState';
-import { Observable } from 'rxjs';
-import { createAsyncState } from '../../projects/ngneat/loadoff/src/lib/asyncState';
+import { merge, Observable, of, Subject, timer } from 'rxjs';
 
 interface Post {
   body: string;
@@ -18,13 +17,18 @@ interface Post {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  posts = createAsyncState<Post>();
-  loading = loadingFor('update', 'delete');
   constructor(private http: HttpClient) {}
-  // @ts-ignore
+
   post$: Observable<AsyncState<string>>;
-  // @ts-ignore
-  post2$: Observable<Post>;
+
+  delayed$: Observable<AsyncState<Post>>;
+
+  higher$: Observable<AsyncState<Post>>;
+
+  highersInitial$: Observable<AsyncState<Post>>;
+
+
+  postId = new Subject<string>();
 
   ngOnInit() {
     this.post$ = this.http.get<Post>('https://jsonplaceholder.typicode.com/posts/2').pipe(
@@ -33,27 +37,35 @@ export class AppComponent {
       toAsyncState()
     );
 
-    // this.http.get<Post>('https://jsonplaceholder.typicode.com/posts/3').pipe(
-    //   toAsyncState()
-    // ).subscribe(state => {
-    //
-    // })
+    this.delayed$ = timer(1000).pipe(
+      switchMap(() => {
+        return this.http.get<Post>('https://jsonplaceholder.typicode.com/posts/3');
+      }),
+      toAsyncState()
+    );
 
-    this.post2$ = this.http.get<Post>('https://jsonplaceholder.typicode.com/posts/2');
+    this.higher$ = merge(
+      of(new AsyncState()),
+      this.postId.pipe(
+        switchMap((id) => {
+          return this.http
+            .get<Post>(`https://jsonplaceholder.typicode.com/posts/${id}`)
+            .pipe(delay(1000), toAsyncState());
+        })
+      )
+    );
 
-    // this.http
-    //   .get<Post>('https://jsonplaceholder.typicode.com/posts/2')
-    //   .pipe(
-    //     delay(1000),
-    //     this.posts.track()
-    //     // tap((v) => console.log('res', v)),
-    //     // finalize(() => console.log('done'))
-    //   )
-    //   .subscribe({
-    //     error(e) {
-    //       console.log(e);
-    //     },
-    //   });
+    this.highersInitial$ = this.postId.pipe(startWith(1)).pipe(
+      switchMap((id) => {
+        return this.http
+          .get<Post>(`https://jsonplaceholder.typicode.com/posts/${id}`)
+          .pipe(delay(1000), toAsyncState());
+      })
+    )
+  }
+
+  fetch(id: string) {
+    this.postId.next(id);
   }
 
   refresh() {

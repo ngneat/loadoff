@@ -38,7 +38,7 @@ function asyncTracker<T, E = any>(state: BehaviorSubject<AsyncState<T, E>>) {
   };
 }
 
-export function createAsyncState<Response, E = any>() {
+function createAsyncState<Response, E = any>() {
   const state = new BehaviorSubject<AsyncState<Response, E>>({
     loading: true,
     error: undefined,

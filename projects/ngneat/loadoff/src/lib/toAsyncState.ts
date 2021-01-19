@@ -1,4 +1,4 @@
-import { of, OperatorFunction, pipe } from 'rxjs';
+import { defer, Observable, of, OperatorFunction, pipe } from 'rxjs';
 import { catchError, map, startWith } from 'rxjs/operators';
 
 interface AsyncModel<T, E> {
@@ -18,12 +18,12 @@ export class AsyncState<T, E = any> {
       res: undefined,
       loading: true,
       complete: false,
-      success: false
+      success: false,
     };
 
     this.mergedState = {
       ...defaults,
-      ...state
+      ...state,
     };
   }
 
@@ -71,7 +71,7 @@ export function toAsyncState<T>(): OperatorFunction<T, AsyncState<T>> {
         res,
         loading: false,
         complete: true,
-        success: true
+        success: true,
       });
     }),
     startWith(new AsyncState<T>()),
@@ -80,7 +80,7 @@ export function toAsyncState<T>(): OperatorFunction<T, AsyncState<T>> {
         new AsyncState<T>({
           error,
           loading: false,
-          complete: true
+          complete: true,
         })
       );
     })
