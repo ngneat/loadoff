@@ -1,4 +1,4 @@
-import { defer, Observable, of, OperatorFunction, pipe } from 'rxjs';
+import { of, OperatorFunction, pipe } from 'rxjs';
 import { catchError, map, startWith } from 'rxjs/operators';
 
 interface AsyncModel<T, E> {
@@ -46,6 +46,10 @@ export class AsyncState<T, E = any> {
   get complete(): boolean {
     return this.mergedState.complete!;
   }
+}
+
+export function createAsyncState<T, E = any>(state: AsyncModel<T, E>) {
+  return new AsyncState(state);
 }
 
 export function isSuccess<T>(state: AsyncState<T>): state is AsyncState<T> & { res: T } {

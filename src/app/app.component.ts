@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { toAsyncState } from '@ngneat/loadoff';
+import { AsyncState, createAsyncStore, toAsyncState } from '@ngneat/loadoff';
 import { delay, map, startWith, switchMap } from 'rxjs/operators';
-import { AsyncState } from 'projects/ngneat/loadoff/src/lib/toAsyncState';
+
 import { merge, Observable, of, Subject, timer } from 'rxjs';
 
 interface Post {
@@ -27,6 +27,7 @@ export class AppComponent {
 
   highersInitial$: Observable<AsyncState<Post>>;
 
+  writable = createAsyncStore<string>();
 
   postId = new Subject<string>();
 
@@ -61,10 +62,21 @@ export class AppComponent {
           .get<Post>(`https://jsonplaceholder.typicode.com/posts/${id}`)
           .pipe(delay(1000), toAsyncState());
       })
-    )
+    );
+
+    this.http
+      .get<Post>('https://jsonplaceholder.typicode.com/posts/5')
+      .pipe(
+        map((post) => post.title),
+        this.writable.track()
+      )
+      .subscribe();
   }
 
   fetch(id: string) {
+    this.writable.update((data) => {
+      return `${data} Changed!`;
+    });
     this.postId.next(id);
   }
 
