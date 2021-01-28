@@ -48,7 +48,7 @@ export class AsyncState<T, E = any> {
   }
 }
 
-export function createAsyncState<T, E = any>(state: AsyncModel<T, E>) {
+export function createAsyncState<T, E = any>(state: AsyncModel<T, E> = {}) {
   return new AsyncState(state);
 }
 
