@@ -12,8 +12,12 @@
     "target": "es2015",
     "module": "es2020",
     "lib": ["es2018", "dom"],
+    "strict": true,
     "paths": {
       "@ngneat/loadoff": ["projects/ngneat/loadoff/src/public-api.ts"]
     }
+  },
+  "angularCompilerOptions": {
+    "disableTypeScriptVersionCheck": true
   }
 }
