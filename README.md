@@ -105,10 +105,10 @@ class UsersComponent {
     this.http.get<Users>('/users').pipe(
       toAsyncState()
     ).subscribe(res => {
-      if(isSuccess(res))
-      if(hasError(res))
-      if(isComplete(res))
-      if(isLoading(res))
+      if(isSuccess(res)) {}
+      if(hasError(res)) {}
+      if(isComplete(res)) {}
+      if(isLoading(res)) {}
     })
   }
 
