@@ -8,7 +8,7 @@
 [![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)]()
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 [![ngneat](https://img.shields.io/badge/@-ngneat-383636?style=flat-square&labelColor=8f68d4)](https://github.com/ngneat/)
 [![spectator](https://img.shields.io/badge/tested%20with-spectator-2196F3.svg?style=flat-square)]()
 
@@ -96,6 +96,25 @@ class UsersComponent {
 
 ```
 
+#### Helper Functions
+
+```ts
+class UsersComponent {
+
+  ngOnInit() {
+    this.http.get<Users>('/users').pipe(
+      toAsyncState()
+    ).subscribe(res => {
+      if(isSuccess(res))
+      if(hasError(res))
+      if(isComplete(res))
+      if(isLoading(res))
+    })
+  }
+
+}
+```
+
 ## Async Storage State
 `AsyncStore` provides the same functionality as `AsyncState`, with one exception that's also `writable`: 
 
@@ -133,6 +152,7 @@ class UsersComponent {
 }
 
 ```
+
 
 ## Contributors ✨
 

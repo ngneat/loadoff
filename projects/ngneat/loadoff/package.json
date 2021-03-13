@@ -1,13 +1,16 @@
 {
   "name": "@ngneat/loadoff",
-  "version": "1.0.0-beta.8",
+  "version": "1.0.0",
   "dependencies": {
     "tslib": "^2.0.0"
   },
   "keywords": [
     "angular",
     "angular 2",
-    "loadoff"
+    "loadoff",
+    "async state",
+    "angular loaders",
+    "loading state"
   ],
   "license": "MIT",
   "publishConfig": {

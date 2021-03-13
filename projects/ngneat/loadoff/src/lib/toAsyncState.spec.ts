@@ -2,7 +2,7 @@ import { of, throwError } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { spy } from './test.utils';
-import { AsyncState, toAsyncState } from '@ngneat/loadoff';
+import { toAsyncState } from '@ngneat/loadoff';
 
 function http() {
   return of({ id: 1 }).pipe(delay(1000));
