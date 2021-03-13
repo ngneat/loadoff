@@ -14,44 +14,124 @@
 
 > The Library Slogan
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid assumenda atque blanditiis cum delectus eligendi ipsam iste iure, maxime modi molestiae nihil obcaecati odit officiis pariatur quibusdam suscipit temporibus unde.
-Accusantium aliquid corporis cupiditate dolores eum exercitationem illo iure laborum minus nihil numquam odit officiis possimus quas quasi quos similique, temporibus veritatis? Exercitationem, iure magni nulla quo sapiente soluta. Esse?
-
-## Features
-
-- ✅ One
-- ✅ Two
-- ✅ Three
-
-## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [FAQ](#faq)
-
 ## Installation
 
 ### NPM
 
-`npm install @ngneat/loadoff --save-dev`
+`npm install @ngneat/loadoff`
 
-### Yarn
+## Create a Loader
 
-`yarn add @ngneat/loadoff --dev`
-
-## Usage
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid assumenda atque blanditiis cum delectus eligendi ipsam iste iure, maxime modi molestiae nihil obcaecati odit officiis pariatur quibusdam suscipit temporibus unde.
+To create a loader use the `loaderFor` function:
 
 ```ts
-function helloWorld() {}
+import { loaderFor } from '@ngneat/loadoff';
+
+@Component({
+  template: `
+    <button>
+      Add
+      <spinner *ngIf="loader.add.inProgress$ | async"></spinner>
+    </button>
+    
+    <button>
+      Edit 
+      <spinner *ngIf="loader.edit.inProgress$ | async"></spinner>
+    </button>
+    
+    <button>
+      Delete 
+      <spinner *ngIf="loader.delete.inProgress$ | async"></spinner>
+    </button>
+  `
+})
+class UsersTableComponent {
+  loader = loaderFor('add', 'edit', 'delete');
+
+  add() {
+    this.service.add().pipe(
+      this.loader.add.track()
+    ).subscribe();
+  }
+
+  edit() {
+    this.service.add().pipe(
+      this.loader.edit.track()
+    ).subscribe();
+  }
+
+  delete() {
+    this.service.add().pipe(
+      this.loader.delete.track()
+    ).subscribe();
+  }
+}
 ```
 
-## FAQ
+## Async State
 
-## How to ...
+```ts
+import { AsyncState, toAsyncState } from '@ngneat/loadoff';
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid assumenda atque blanditiis cum delectus eligendi ips
+@Component({
+  template: `
+    <ng-container *ngIf="users$ | async; let state">
+      <p *ngIf="state.loading">Loading....</p>
+      <p *ngIf="state.error">Error</p>
+      <p *ngIf="state.res">
+        {{ state.res | json }}
+      </p>
+    </ng-container>
+  `
+})
+class UsersComponent {
+  users$: Observable<AsyncState<Users>>;
+
+  ngOnInit() {
+    this.users$ = this.http.get<Users>('/users').pipe(
+      toAsyncState()
+    );
+  }
+
+}
+
+```
+
+## Async Storage State
+```ts
+import { AsyncState, createAsyncStore } from '@ngneat/loadoff';
+
+@Component({
+  template: `
+    <ng-container *ngIf="store.value$ | async; let state">
+      <p *ngIf="state.loading">Loading....</p>
+      <p *ngIf="state.error">Error</p>
+      <p *ngIf="state.res">
+        {{ state.res | json }}
+      </p>
+    </ng-container>
+    
+    <button (click)=""updateUsers()">Update Users</button>
+  `
+})
+class UsersComponent {
+  store = createAsyncStore<Users>();
+
+  ngOnInit() {
+    this.users$ = this.http.get<Users>('/users').pipe(
+      this.store.track()
+    );
+  }
+  
+  updateUsers() {
+    this.store.update((users) => {
+      return [];
+    });
+  }
+
+}
+
+```
 
 ## Contributors ✨
 
@@ -65,6 +145,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification.
+Contributions of any kind welcome!
 
 <div>Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
