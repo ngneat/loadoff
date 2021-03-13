@@ -16,13 +16,11 @@
 
 ## Installation
 
-### NPM
-
 `npm install @ngneat/loadoff`
 
 ## Create a Loader
 
-To create a loader use the `loaderFor` function:
+To create a loader, call the `loaderFor` function and specify the loaders you want to create:
 
 ```ts
 import { loaderFor } from '@ngneat/loadoff';
@@ -69,6 +67,7 @@ class UsersTableComponent {
 ```
 
 ## Async State
+`AsyncState` provides a nice abstraction over `async` observables. You can use the `toAsyncState` operator to create an `AsyncState` instance which exposes a `loading`, `error`, and `res` state:
 
 ```ts
 import { AsyncState, toAsyncState } from '@ngneat/loadoff';
@@ -98,6 +97,8 @@ class UsersComponent {
 ```
 
 ## Async Storage State
+`AsyncStore` provides the same functionality as `AsyncState`, with one exception that's also `writable`: 
+
 ```ts
 import { AsyncState, createAsyncStore } from '@ngneat/loadoff';
 
@@ -140,7 +141,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-<!-- markdownlint-enable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://www.netbasal.com/"><img src="https://avatars.githubusercontent.com/u/6745730?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Netanel Basal</b></sub></a><br /><a href="https://github.com/@ngneat/loadoff/commits?author=NetanelBasal" title="Documentation">📖</a> <a href="#ideas-NetanelBasal" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/@ngneat/loadoff/commits?author=NetanelBasal" title="Tests">⚠️</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
