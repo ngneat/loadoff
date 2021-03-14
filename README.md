@@ -12,7 +12,7 @@
 [![ngneat](https://img.shields.io/badge/@-ngneat-383636?style=flat-square&labelColor=8f68d4)](https://github.com/ngneat/)
 [![spectator](https://img.shields.io/badge/tested%20with-spectator-2196F3.svg?style=flat-square)]()
 
-> The Library Slogan
+> When it comes to loaders, take a load off your mind...
 
 ## Installation
 
@@ -116,7 +116,7 @@ class UsersComponent {
 ```
 
 ## Async Storage State
-`AsyncStore` provides the same functionality as `AsyncState`, with one exception that's also `writable`: 
+`AsyncStore` provides the same functionality as `AsyncState`, with the added ability of being `writable`:
 
 ```ts
 import { AsyncState, createAsyncStore } from '@ngneat/loadoff';
