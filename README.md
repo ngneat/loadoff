@@ -96,6 +96,8 @@ class UsersComponent {
 
 ```
 
+You can also use the `*subscribe` [directive](https://github.com/ngneat/subscribe) instead of `*ngIf`.
+
 #### Helper Functions
 
 ```ts
