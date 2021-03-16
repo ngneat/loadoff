@@ -98,9 +98,70 @@ class UsersComponent {
 
 You can also use the `*subscribe` [directive](https://github.com/ngneat/subscribe) instead of `*ngIf`.
 
-#### Helper Functions
+### `createAsyncState`
+You can use the `createAsyncState` to manually create an instance of `AsyncState`:
 
 ```ts
+import { createAsyncState } from '@ngneat/loadoff';
+
+
+class UsersComponent {
+  state = createAsyncState()
+}
+```
+
+The initial state of `AsyncState` instance is:
+
+```ts
+{
+  error: undefined,
+  res: undefined,
+  loading: true,
+  complete: false,
+  success: false,
+};
+```
+
+You can always override it by passing a partial object to the `createAsyncState` function:
+
+```ts
+import { createAsyncState } from '@ngneat/loadoff';
+
+
+class UsersComponent {
+  state = createAsyncState({ loading: false, complete: true, res: data })
+}
+```
+
+
+### `createSyncState`
+Sometimes there could be a more complex situation when you want to return a `sync` state which means setting the `loading` to `false`
+and `complete` to `true`:
+
+```ts
+import { createSyncState, toAsyncState } from '@ngneat/loadoff';
+
+
+class UsersComponent {
+  ngOnInit() {
+    source$.pipe(
+      switchMap((condition) => {
+        if(condition) {
+          return of(createSyncState(data));
+        }
+
+        return inner$.pipe(toAsyncState())
+      })
+    )
+  }
+}
+```
+
+### Helper Functions
+
+```ts
+import { isSuccess, hasError, isComplete, isLoading } from '@ngneat/loadoff';
+
 class UsersComponent {
 
   ngOnInit() {
