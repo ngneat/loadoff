@@ -1,54 +1,23 @@
 import { of, OperatorFunction, pipe } from 'rxjs';
 import { catchError, map, startWith } from 'rxjs/operators';
 
-interface AsyncModel<T, E> {
-  res?: T | undefined;
-  loading?: boolean;
-  error?: E | undefined;
-  success?: boolean;
-  complete?: boolean;
-}
-
 export class AsyncState<T, E = any> {
-  private mergedState: AsyncModel<T, E>;
+  public res: T | undefined = undefined;
+  public error: E | undefined = undefined;
+  public loading: boolean = true;
+  public success: boolean = false;
+  public complete: boolean = false;
 
-  constructor(state: AsyncModel<T, E> = {}) {
-    const defaults = {
-      error: undefined,
-      res: undefined,
-      loading: true,
-      complete: false,
-      success: false,
-    };
-
-    this.mergedState = {
-      ...defaults,
-      ...state,
-    };
-  }
-
-  get res(): T | undefined {
-    return this.mergedState.res;
-  }
-
-  get error(): E | undefined {
-    return this.mergedState.error;
-  }
-
-  get loading(): boolean {
-    return this.mergedState.loading!;
-  }
-
-  get success(): boolean {
-    return this.mergedState.success!;
-  }
-
-  get complete(): boolean {
-    return this.mergedState.complete!;
+  constructor(state: Partial<AsyncState<T, E>> = {}) {
+    this.res = state.res ?? this.res;
+    this.error = state.error ?? this.error;
+    this.loading = state.loading ?? this.loading;
+    this.success = state.success ?? this.success;
+    this.complete = state.complete ?? this.complete;
   }
 }
 
-export function createAsyncState<T, E = any>(state: AsyncModel<T, E> = {}) {
+export function createAsyncState<T, E = any>(state: Partial<AsyncState<T, E>>) {
   return new AsyncState(state);
 }
 

@@ -2,12 +2,13 @@ import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { spy } from './test.utils';
-import { AsyncState, toAsyncState } from '@ngneat/loadoff';
+import { AsyncState, createAsyncState, toAsyncState } from '@ngneat/loadoff';
 
 interface CustomError {
   errorCode: string;
   errorMessage: string;
 }
+
 const DEFAULT_ERROR: Error = new Error('error');
 const CUSTOM_ERROR: CustomError = { errorCode: 'ERROR-123-OMG', errorMessage: `I'm a custom error` };
 
@@ -61,6 +62,30 @@ describe('toAsyncState', () => {
   it('should work with a custom error', fakeAsync(() => {
     const error$ = httpError(CUSTOM_ERROR).pipe(toAsyncState<unknown, CustomError>());
     assertError<unknown, CustomError>(error$, CUSTOM_ERROR);
+  }));
+
+  it('should be able to create AsyncState with defaults', fakeAsync(() => {
+    const result = createAsyncState({ loading: false });
+    expect(JSON.stringify(result)).toEqual(
+      JSON.stringify({
+        res: undefined,
+        error: undefined,
+        loading: false,
+        success: false,
+        complete: false,
+      })
+    );
+
+    const result2 = createAsyncState({ res: 'Hi', loading: false });
+    expect(JSON.stringify(result2)).toEqual(
+      JSON.stringify({
+        res: 'Hi',
+        error: undefined,
+        loading: false,
+        success: false,
+        complete: false,
+      })
+    );
   }));
 });
 
