@@ -52,44 +52,44 @@ export function createAsyncState<T, E = any>(state: AsyncModel<T, E> = {}) {
   return new AsyncState(state);
 }
 
-export function createSyncState<T>(res: T) {
-  return new AsyncState({
+export function createSyncState<T, E = any>(res: T) {
+  return new AsyncState<T, E>({
     loading: false,
     complete: true,
     res,
   });
 }
 
-export function isSuccess<T>(state: AsyncState<T>): state is AsyncState<T> & { res: T } {
+export function isSuccess(state: AsyncState<unknown>) {
   return state.success;
 }
 
-export function hasError<T>(state: AsyncState<T>): state is AsyncState<T> & { res: undefined } {
+export function hasError(state: AsyncState<unknown>) {
   return !!state.error;
 }
 
-export function isComplete<T>(state: AsyncState<T>) {
+export function isComplete(state: AsyncState<unknown>) {
   return state.complete;
 }
 
-export function isLoading<T>(state: AsyncState<T>) {
+export function isLoading(state: AsyncState<unknown>) {
   return state.loading;
 }
 
-export function toAsyncState<T>(): OperatorFunction<T, AsyncState<T>> {
+export function toAsyncState<T, E = any>(): OperatorFunction<T, AsyncState<T, E>> {
   return pipe(
     map((res) => {
-      return new AsyncState<T>({
+      return new AsyncState<T, E>({
         res,
         loading: false,
         complete: true,
         success: true,
       });
     }),
-    startWith(new AsyncState<T>()),
+    startWith(new AsyncState<T, E>()),
     catchError((error) => {
       return of(
-        new AsyncState<T>({
+        new AsyncState<T, E>({
           error,
           loading: false,
           complete: true,
