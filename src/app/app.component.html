@@ -17,7 +17,7 @@
   </p>
 </ng-template>
 
-<button (click)="refresh()">Refresh</button>
+<button (click)="refresh()">Refresh All</button>
 
 <h1>Delayed</h1>
 
@@ -50,3 +50,15 @@
 </ng-template>
 
 <input type="text" #input placeholder="Post id" /><button (click)="fetch(input.value)">Fetch</button>
+
+<h1>Retain result on refresh</h1>
+
+<ng-template [subscribe]="retainResult$" let-state>
+  <p *ngIf="state.loading">Loading....</p>
+  <p *ngIf="state.error">Error</p>
+  <p *ngIf="state.res">
+    {{ state.res | json }}
+  </p>
+</ng-template>
+
+<button (click)="refresh$.next(true)">Refresh</button>

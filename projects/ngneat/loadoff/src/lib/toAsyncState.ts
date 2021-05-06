@@ -17,7 +17,7 @@ export class AsyncState<T, E = any> {
   }
 }
 
-export function createAsyncState<T, E = any>(state: Partial<AsyncState<T, E>>) {
+export function createAsyncState<T, E = any>(state: Partial<AsyncState<T, E>> = {}) {
   return new AsyncState(state);
 }
 
