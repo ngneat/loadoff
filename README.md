@@ -163,6 +163,7 @@ class UsersComponent {
 import { isSuccess, hasError, isComplete, isLoading } from '@ngneat/loadoff';
 
 class UsersComponent {
+  loading$ = combineLatest([asyncState, asyncState]).pipe(someLoading())
 
   ngOnInit() {
     this.http.get<Users>('/users').pipe(

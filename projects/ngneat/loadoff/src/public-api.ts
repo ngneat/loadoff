@@ -9,3 +9,4 @@ export {
   AsyncState,
 } from './lib/toAsyncState';
 export { createAsyncStore } from './lib/asyncStore';
+export { someLoading } from './lib/operators';
