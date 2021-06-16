@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/ngneat/loadoff/compare/v1.0.0...v1.1.0) (2021-06-16)
+
+
+### Features
+
+* 🎸 add some loading ([e21fc2c](https://github.com/ngneat/loadoff/commit/e21fc2c3b2108aa06f26d23011a2478e17fa437e)), closes [#4](https://github.com/ngneat/loadoff/issues/4)
+
 ## 1.0.0 (2021-03-14)
 
 
