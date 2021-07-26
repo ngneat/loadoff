@@ -20,10 +20,10 @@
 
 ## Create a Loader
 
-To create a loader, call the `loaderFor` function and specify the loaders you want to create:
+To create a loader, call the `loadingFor` function and specify the loaders you want to create:
 
 ```ts
-import { loaderFor } from '@ngneat/loadoff';
+import { loadingFor } from '@ngneat/loadoff';
 
 @Component({
   template: `
@@ -44,7 +44,7 @@ import { loaderFor } from '@ngneat/loadoff';
   `
 })
 class UsersTableComponent {
-  loader = loaderFor('add', 'edit', 'delete');
+  loader = loadingFor('add', 'edit', 'delete');
 
   add() {
     this.service.add().pipe(
