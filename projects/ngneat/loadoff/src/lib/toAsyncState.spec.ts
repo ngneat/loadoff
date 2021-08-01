@@ -1,18 +1,26 @@
-import { of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { spy } from './test.utils';
-import { toAsyncState } from '@ngneat/loadoff';
+import { AsyncState, createAsyncState, toAsyncState } from '@ngneat/loadoff';
+
+interface CustomError {
+  errorCode: string;
+  errorMessage: string;
+}
+
+const DEFAULT_ERROR: Error = new Error('error');
+const CUSTOM_ERROR: CustomError = { errorCode: 'ERROR-123-OMG', errorMessage: `I'm a custom error` };
 
 function http() {
   return of({ id: 1 }).pipe(delay(1000));
 }
 
-function httpError() {
+function httpError(error: any) {
   return of({ id: 1 }).pipe(
     delay(1000),
     map(() => {
-      throw new Error('error');
+      throw error;
     })
   );
 }
@@ -47,30 +55,64 @@ describe('toAsyncState', () => {
   }));
 
   it('should work with error', fakeAsync(() => {
-    const reqSpy = spy();
+    const error$ = httpError(DEFAULT_ERROR).pipe(toAsyncState<unknown, any>());
+    assertError<unknown, Error>(error$, DEFAULT_ERROR);
+  }));
 
-    httpError().pipe(toAsyncState()).subscribe(reqSpy);
+  it('should work with a custom error', fakeAsync(() => {
+    const error$ = httpError(CUSTOM_ERROR).pipe(toAsyncState<unknown, CustomError>());
+    assertError<unknown, CustomError>(error$, CUSTOM_ERROR);
+  }));
 
-    expect(reqSpy.next).toHaveBeenCalledWith(
-      jasmine.objectContaining({
+  it('should be able to create AsyncState with defaults', fakeAsync(() => {
+    const result = createAsyncState({ loading: false });
+    expect(JSON.stringify(result)).toEqual(
+      JSON.stringify({
         res: undefined,
         error: undefined,
-        loading: true,
+        loading: false,
         success: false,
         complete: false,
       })
     );
 
-    tick(1000);
-
-    expect(reqSpy.next).toHaveBeenCalledWith(
-      jasmine.objectContaining({
-        res: undefined,
-        error: new Error('error'),
+    const result2 = createAsyncState({ res: 'Hi', loading: false });
+    expect(JSON.stringify(result2)).toEqual(
+      JSON.stringify({
+        res: 'Hi',
+        error: undefined,
         loading: false,
         success: false,
-        complete: true,
+        complete: false,
       })
     );
   }));
 });
+
+function assertError<T, E>(error$: Observable<AsyncState<T, E>>, error: E) {
+  const reqSpy = spy();
+
+  error$.subscribe(reqSpy);
+
+  expect(reqSpy.next).toHaveBeenCalledWith(
+    jasmine.objectContaining({
+      res: undefined,
+      error: undefined,
+      loading: true,
+      success: false,
+      complete: false,
+    })
+  );
+
+  tick(1000);
+
+  expect(reqSpy.next).toHaveBeenCalledWith(
+    jasmine.objectContaining({
+      res: undefined,
+      error: error,
+      loading: false,
+      success: false,
+      complete: true,
+    })
+  );
+}
