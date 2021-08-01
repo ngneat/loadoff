@@ -10,3 +10,4 @@ export {
 } from './lib/toAsyncState';
 export { createAsyncStore } from './lib/asyncStore';
 export { retainResult } from './lib/retainResult';
+export { someLoading } from './lib/operators';
