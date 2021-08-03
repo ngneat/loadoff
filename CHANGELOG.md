@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/ngneat/loadoff/compare/v1.2.0...v1.3.0) (2021-08-03)
+
+
+### Features
+
+* 🎸 add createsync state ([d6aeaed](https://github.com/ngneat/loadoff/commit/d6aeaed17cd6e17339bcfc43293e3855e882a91c))
+
 ## [1.2.0](https://github.com/ngneat/loadoff/compare/v1.1.0...v1.2.0) (2021-08-01)
 
 
