@@ -2,7 +2,7 @@ import { BehaviorSubject, of } from 'rxjs';
 import { delay, switchMap } from 'rxjs/operators';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { spy } from './test.utils';
-import { toAsyncState } from '@ngneat/loadoff';
+import { toAsyncState } from './toAsyncState';
 import { retainResult } from './retainResult';
 
 describe('retainResult', () => {

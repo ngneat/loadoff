@@ -1,6 +1,6 @@
 import { OperatorFunction, pipe } from 'rxjs';
 import { scan, startWith } from 'rxjs/operators';
-import { AsyncState, createAsyncState } from '@ngneat/loadoff';
+import { AsyncState, createAsyncState } from './toAsyncState';
 
 /**
  * Operator that retains the previous result on a new emission of an AsyncState item.
