@@ -51,9 +51,9 @@
 
 <input type="text" #input placeholder="Post id" /><button (click)="fetch(input.value)">Fetch</button>
 
-<h1>Retain result on refresh</h1>
+<h1>Retain response on refresh</h1>
 
-<ng-template [subscribe]="retainResult$" let-state>
+<ng-template [subscribe]="retainResponse$" let-state>
   <p *ngIf="state.loading">Loading....</p>
   <p *ngIf="state.error">Error</p>
   <p *ngIf="state.res">

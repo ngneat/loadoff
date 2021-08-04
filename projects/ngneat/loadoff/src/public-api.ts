@@ -9,5 +9,5 @@ export {
   AsyncState,
 } from './lib/toAsyncState';
 export { createAsyncStore } from './lib/asyncStore';
-export { retainResult } from './lib/retainResult';
+export { retainResponse } from './lib/retainResponse';
 export { someLoading } from './lib/operators';

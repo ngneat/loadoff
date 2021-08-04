@@ -180,10 +180,10 @@ class UsersComponent {
 ```
 
 ### `retailResult`
-Sometimes it you want to retain the result while fetching a new value. This can be achieved with the `retainResult` operator.
+Sometimes you want to retain the response while fetching a new value. This can be achieved with the `retainResponse` operator.
 
 ```ts
-import { toAsyncState, retainResult } from '@ngneat/loadoff';
+import { toAsyncState, retainResponse } from '@ngneat/loadoff';
 
 @Component({
   template: `
@@ -204,7 +204,7 @@ class UsersComponent {
   ngOnInit() {
     this.users$ = this.refresh$.pipe(
       switchMap(() => this.http.get<Users>('/users').pipe(toAsyncState())),
-      retainResult()
+      retainResponse()
     );
   }
 }

@@ -3,10 +3,10 @@ import { delay, switchMap } from 'rxjs/operators';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { spy } from './test.utils';
 import { toAsyncState } from './toAsyncState';
-import { retainResult } from './retainResult';
+import { retainResponse } from './retainResponse';
 
-describe('retainResult', () => {
-  it('should retain result on refresh', fakeAsync(() => {
+describe('retainResponse', () => {
+  it('should retain response on refresh', fakeAsync(() => {
     const reqSpy = spy();
 
     const refresh$: BehaviorSubject<any> = new BehaviorSubject<any>(1);
@@ -14,7 +14,7 @@ describe('retainResult', () => {
     refresh$
       .pipe(
         switchMap((id) => http(id).pipe(toAsyncState())),
-        retainResult()
+        retainResponse()
       )
       .subscribe(reqSpy);
 

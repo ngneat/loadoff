@@ -4,7 +4,7 @@ import { AsyncState, createAsyncStore, toAsyncState } from '@ngneat/loadoff';
 import { delay, map, startWith, switchMap } from 'rxjs/operators';
 
 import { BehaviorSubject, merge, Observable, of, Subject, timer } from 'rxjs';
-import { retainResult } from '../../projects/ngneat/loadoff/src/lib/retainResult';
+import { retainResponse } from '@ngneat/loadoff';
 
 interface Post {
   body: string;
@@ -28,7 +28,7 @@ export class AppComponent {
 
   highersInitial$: Observable<AsyncState<Post>>;
 
-  retainResult$: Observable<AsyncState<string>>;
+  retainResponse$: Observable<AsyncState<string>>;
   refresh$ = new BehaviorSubject<boolean>(true);
 
   writable = createAsyncStore<string>();
@@ -76,7 +76,7 @@ export class AppComponent {
       )
       .subscribe();
 
-    this.retainResult$ = this.refresh$.pipe(
+    this.retainResponse$ = this.refresh$.pipe(
       map(() => Math.floor(Math.random() * Math.floor(20)) + 1),
       switchMap((randomId) =>
         this.http.get<Post>(`https://jsonplaceholder.typicode.com/posts/${randomId}`).pipe(
@@ -85,7 +85,7 @@ export class AppComponent {
           toAsyncState()
         )
       ),
-      retainResult()
+      retainResponse()
     );
   }
 
