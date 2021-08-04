@@ -210,6 +210,8 @@ class UsersComponent {
 }
 ```
 
+The `retainResponse` operator accepts an optional `startWithValue` parameter which you can use to initialize the stream with an alternative `AsyncState` value.
+
 ## Async Storage State
 `AsyncStore` provides the same functionality as `AsyncState`, with the added ability of being `writable`:
 
@@ -226,7 +228,7 @@ import { AsyncState, createAsyncStore } from '@ngneat/loadoff';
       </p>
     </ng-container>
     
-    <button (click)=""updateUsers()">Update Users</button>
+    <button (click)="updateUsers()">Update Users</button>
   `
 })
 class UsersComponent {

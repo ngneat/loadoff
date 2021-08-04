@@ -2,7 +2,7 @@ import { BehaviorSubject, of } from 'rxjs';
 import { delay, switchMap } from 'rxjs/operators';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { spy } from './test.utils';
-import { toAsyncState } from './toAsyncState';
+import { createAsyncState, toAsyncState } from './toAsyncState';
 import { retainResponse } from './retainResponse';
 
 describe('retainResponse', () => {
@@ -39,6 +39,29 @@ describe('retainResponse', () => {
     tick(1000);
 
     expect(reqSpy.next).toHaveBeenCalledWith(jasmine.objectContaining(createLoadedObject(null)));
+  }));
+
+  it('should be able to pass in a startWithValue', fakeAsync(() => {
+    const reqSpy = spy();
+
+    const refresh$: BehaviorSubject<any> = new BehaviorSubject<any>(1);
+
+    const startWithValue = createAsyncState({
+      res: 'INITIAL RESPONSE',
+    });
+
+    refresh$
+      .pipe(
+        switchMap((id) => http(id).pipe(toAsyncState())),
+        retainResponse(startWithValue)
+      )
+      .subscribe(reqSpy);
+
+    expect(reqSpy.next).toHaveBeenCalledWith(jasmine.objectContaining(createLoadingObject('INITIAL RESPONSE')));
+
+    tick(1000);
+
+    expect(reqSpy.next).toHaveBeenCalledWith(jasmine.objectContaining(createLoadedObject(1)));
   }));
 });
 
