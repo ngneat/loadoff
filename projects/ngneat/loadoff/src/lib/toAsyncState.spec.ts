@@ -2,7 +2,7 @@ import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { spy } from './test.utils';
-import { AsyncState, createAsyncState, toAsyncState } from '@ngneat/loadoff';
+import { AsyncState, createAsyncState, toAsyncState } from './toAsyncState';
 
 interface CustomError {
   errorCode: string;

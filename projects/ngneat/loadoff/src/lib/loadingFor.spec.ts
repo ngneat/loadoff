@@ -1,5 +1,5 @@
 import { spy, http } from './test.utils';
-import { loadingFor } from '@ngneat/loadoff';
+import { loadingFor } from './loadingFor';
 import { fakeAsync, tick } from '@angular/core/testing';
 
 describe('loadingFor', () => {

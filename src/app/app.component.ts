@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { AsyncState, createAsyncStore, toAsyncState } from '@ngneat/loadoff';
 import { delay, map, startWith, switchMap } from 'rxjs/operators';
 
-import { merge, Observable, of, Subject, timer } from 'rxjs';
+import { BehaviorSubject, merge, Observable, of, Subject, timer } from 'rxjs';
+import { retainResponse } from '@ngneat/loadoff';
 
 interface Post {
   body: string;
@@ -26,6 +27,9 @@ export class AppComponent {
   higher$: Observable<AsyncState<Post>>;
 
   highersInitial$: Observable<AsyncState<Post>>;
+
+  retainResponse$: Observable<AsyncState<string>>;
+  refresh$ = new BehaviorSubject<boolean>(true);
 
   writable = createAsyncStore<string>();
 
@@ -71,12 +75,22 @@ export class AppComponent {
         this.writable.track()
       )
       .subscribe();
+
+    this.retainResponse$ = this.refresh$.pipe(
+      map(() => Math.floor(Math.random() * Math.floor(20)) + 1),
+      switchMap((randomId) =>
+        this.http.get<Post>(`https://jsonplaceholder.typicode.com/posts/${randomId}`).pipe(
+          map((post) => post.title),
+          delay(1000),
+          toAsyncState()
+        )
+      ),
+      retainResponse()
+    );
   }
 
   fetch(id: string) {
-    this.writable.update((data) => {
-      return `${data} Changed!`;
-    });
+    this.writable.update((data) => `${data} Changed!`);
     this.postId.next(id);
   }
 

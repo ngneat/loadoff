@@ -179,6 +179,39 @@ class UsersComponent {
 }
 ```
 
+### `retailResult`
+Sometimes you want to retain the response while fetching a new value. This can be achieved with the `retainResponse` operator.
+
+```ts
+import { toAsyncState, retainResponse } from '@ngneat/loadoff';
+
+@Component({
+  template: `
+    <ng-container *ngIf="users$ | async; let state">
+      <p *ngIf="state.loading">Loading....</p>
+      <p *ngIf="state.error">Error</p>
+      <p *ngIf="state.res">
+        {{ state.res | json }}
+      </p>
+    </ng-container>
+    <button (click)='refresh$.next(true)'>Refresh</button>
+  `
+})
+class UsersComponent {
+  users$: Observable<AsyncState<Users>>;
+  refresh$ = new BehaviorSubject<boolean>(true);
+
+  ngOnInit() {
+    this.users$ = this.refresh$.pipe(
+      switchMap(() => this.http.get<Users>('/users').pipe(toAsyncState())),
+      retainResponse()
+    );
+  }
+}
+```
+
+The `retainResponse` operator accepts an optional `startWithValue` parameter which you can use to initialize the stream with an alternative `AsyncState` value.
+
 ## Async Storage State
 `AsyncStore` provides the same functionality as `AsyncState`, with the added ability of being `writable`:
 
@@ -195,7 +228,7 @@ import { AsyncState, createAsyncStore } from '@ngneat/loadoff';
       </p>
     </ng-container>
     
-    <button (click)=""updateUsers()">Update Users</button>
+    <button (click)="updateUsers()">Update Users</button>
   `
 })
 class UsersComponent {

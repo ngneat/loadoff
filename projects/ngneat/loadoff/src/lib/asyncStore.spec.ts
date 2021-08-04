@@ -1,4 +1,4 @@
-import { createAsyncStore } from '@ngneat/loadoff';
+import { createAsyncStore } from './asyncStore';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { fakeAsync, tick } from '@angular/core/testing';
