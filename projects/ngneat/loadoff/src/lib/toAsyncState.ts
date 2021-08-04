@@ -2,18 +2,14 @@ import { of, OperatorFunction, pipe } from 'rxjs';
 import { catchError, map, startWith } from 'rxjs/operators';
 
 export class AsyncState<T, E = any> {
-  public res: T | undefined = undefined;
-  public error: E | undefined = undefined;
-  public loading: boolean = true;
-  public success: boolean = false;
-  public complete: boolean = false;
+  res: T | undefined = undefined;
+  error: E | undefined = undefined;
+  loading = true;
+  success = false;
+  complete = false;
 
   constructor(state: Partial<AsyncState<T, E>> = {}) {
-    this.res = state.res ?? this.res;
-    this.error = state.error ?? this.error;
-    this.loading = state.loading ?? this.loading;
-    this.success = state.success ?? this.success;
-    this.complete = state.complete ?? this.complete;
+    Object.assign(this, state);
   }
 }
 
@@ -29,11 +25,11 @@ export function createSyncState<T, E = any>(res: T) {
   });
 }
 
-export function isSuccess(state: AsyncState<unknown>) {
+export function isSuccess<T>(state: AsyncState<T>): state is AsyncState<T> & { res: T }  {
   return state.success;
 }
 
-export function hasError(state: AsyncState<unknown>) {
+export function hasError<T>(state: AsyncState<T>): state is AsyncState<T> & { res: undefined } {
   return !!state.error;
 }
 

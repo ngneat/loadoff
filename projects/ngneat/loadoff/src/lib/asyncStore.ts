@@ -24,6 +24,7 @@ export function createAsyncStore<Response, E = any>() {
 
   return {
     value$: store.asObservable(),
+    getValue: store.getValue(),
     update,
     track<T extends Response>(): MonoTypeOperatorFunction<T> {
       return pipe(
