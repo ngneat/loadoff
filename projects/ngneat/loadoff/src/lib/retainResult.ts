@@ -13,7 +13,7 @@ export function retainResult<T, E = any>(): OperatorFunction<AsyncState<T, E>, A
       (acc: AsyncState<T, E>, val: AsyncState<T, E>) =>
         new AsyncState<T, E>({
           ...val,
-          res: val.res ?? acc.res,
+          res: val.success ? val.res : acc.res,
         })
     )
   );
