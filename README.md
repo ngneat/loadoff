@@ -179,7 +179,7 @@ class UsersComponent {
 }
 ```
 
-### `retailResult`
+### `retainResponse`
 Sometimes you want to retain the response while fetching a new value. This can be achieved with the `retainResponse` operator.
 
 ```ts
