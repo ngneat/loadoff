@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/ngneat/loadoff/compare/v1.2.0...v1.3.0) (2021-08-08)
+
+
+### Features
+
+* Add retainResult pipe which saves results across emissions ([e9138bd](https://github.com/ngneat/loadoff/commit/e9138bd2ce57d670ab257bf1d53293dd2d544b2d))
+* added new optional parameter to pass in an alternative startWith value for the retainResponse operator. ([e1ccb0c](https://github.com/ngneat/loadoff/commit/e1ccb0c065d97e8d40261dc97a70e5a0aa0e1873))
+
+
+### Bug Fixes
+
+* als retain valid null and undefined responses ([3d27a8f](https://github.com/ngneat/loadoff/commit/3d27a8fb5d3096ba48b9b8282eb1203f2442a537))
+* Fix typo in README ([fe718f4](https://github.com/ngneat/loadoff/commit/fe718f4c6e5c0b07999da5f4d616dc4c323d6a72))
+* use relative imports to fix circular dependency error on build ([f342f4a](https://github.com/ngneat/loadoff/commit/f342f4af6e8475462326a5e7e0ab1267fb7575ed))
+
 ## [1.2.0](https://github.com/ngneat/loadoff/compare/v1.1.0...v1.2.0) (2021-08-01)
 
 
