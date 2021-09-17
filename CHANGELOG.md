@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/ngneat/loadoff/compare/v1.4.0...v1.4.1) (2021-09-17)
+
+
+### Bug Fixes
+
+* 🐛 expose sync state ([9229853](https://github.com/ngneat/loadoff/commit/9229853d0a425b1b74c046b99ddcc537006e75de)), closes [#11](https://github.com/ngneat/loadoff/issues/11)
+
 ## [1.3.0](https://github.com/ngneat/loadoff/compare/v1.2.0...v1.3.0) (2021-08-08)
 
 
