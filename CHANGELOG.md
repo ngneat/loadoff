@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/ngneat/loadoff/compare/v1.4.1...v2.0.0) (2021-11-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* 🧨 Peer dep of ng13
+
+### Features
+
+* 🎸 upgrade to v13 ([3353bb1](https://github.com/ngneat/loadoff/commit/3353bb1ae7f8ac2b4e3987eb775e25be169f9920))
+
 ### [1.4.1](https://github.com/ngneat/loadoff/compare/v1.4.0...v1.4.1) (2021-09-17)
 
 
