@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/ngneat/loadoff/compare/v2.0.0...v2.1.0) (2022-02-23)
+
+
+### Features
+
+* 🎸 add console error ([909681e](https://github.com/ngneat/loadoff/commit/909681e534b3c32a1b028a237f1ce0061a1a8f27))
+
 ## [2.0.0](https://github.com/ngneat/loadoff/compare/v1.4.1...v2.0.0) (2021-11-24)
 
 
