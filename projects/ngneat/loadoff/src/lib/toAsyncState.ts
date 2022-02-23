@@ -25,7 +25,7 @@ export function createSyncState<T, E = any>(res: T) {
   });
 }
 
-export function isSuccess<T>(state: AsyncState<T>): state is AsyncState<T> & { res: T }  {
+export function isSuccess<T>(state: AsyncState<T>): state is AsyncState<T> & { res: T } {
   return state.success;
 }
 
@@ -53,6 +53,8 @@ export function toAsyncState<T, E = any>(): OperatorFunction<T, AsyncState<T, E>
     }),
     startWith(new AsyncState<T, E>()),
     catchError((error) => {
+      console.error(error);
+
       return of(
         new AsyncState<T, E>({
           error,
